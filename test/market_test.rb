@@ -134,10 +134,9 @@ class MarketTest < Minitest::Test
     @vendor2.stock(@item4, 50)
     @vendor2.stock(@item3, 25)
     @vendor3.stock(@item1, 65)
-    require "pry"; binding.pry
     @market.sell(@item4, 5)
     @market.sell(@item1, 40)
-    require "pry"; binding.pry
+    
     assert_equal 0, @vendor1.check_stock(@item1)
     assert_equal 60, @vendor3.check_stock(@item1)
   end
