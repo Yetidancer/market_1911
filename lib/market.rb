@@ -25,4 +25,21 @@ class Market
     end.flatten
     item_list.map {|item| item.name}.uniq.sort
   end
+
+  def total_inventory
+    @vendors.reduce({}) do |all_items, vendor|
+      vendor.inventory.each do |item, amount|
+        if all_items[item]
+          all_items[item] += amount
+        else
+          all_items[item] = amount
+        end
+      end
+      all_items
+    end
+  end
+
+  def sell(item, amount)
+    return false if amount > total_inventory[item]
+  end
 end

@@ -16,6 +16,6 @@ class Vendor
       @inventory[item] += amount
     else
       @inventory[item] = amount
-    end 
+    end
   end
 end
