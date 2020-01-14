@@ -48,4 +48,25 @@ class VendorTest < Minitest::Test
 
     assert_equal ({@item1 => 55, @item2 => 12}), @vendor.inventory
   end
+
+  def test_vendor_can_sell
+    @vendor.stock(@item1, 30)
+    @vendor.stock(@item1, 25)
+    @vendor.stock(@item2, 12)
+    @vendor.sell(@item1, 20)
+    @vendor.sell(@item2, 20)
+
+    assert_equal 35, @vendor.check_stock(@item1)
+    assert_equal 0, @vendor.check_stock(@item2)
+  end
+
+  def test_sell_returns_amount_sold_if_amount_is_greater_than_inventory
+    @vendor.stock(@item1, 30)
+    @vendor.stock(@item1, 25)
+    @vendor.stock(@item2, 12)
+    @vendor.sell(@item1, 20)
+
+
+    assert_equal 12, @vendor.sell(@item2, 20)
+  end
 end

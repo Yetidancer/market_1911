@@ -18,4 +18,15 @@ class Vendor
       @inventory[item] = amount
     end
   end
+
+  def sell(item, amount)
+    sold = 0
+    if @inventory[item] && @inventory[item] > amount
+      @inventory[item] -= amount
+    elsif @inventory[item] && @inventory[item] <= amount
+      sold = @inventory[item]
+      @inventory[item] = 0
+    end
+    sold
+  end
 end

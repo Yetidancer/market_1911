@@ -40,6 +40,11 @@ class Market
   end
 
   def sell(item, amount)
+    return false if total_inventory.keys.include?(item) == false
     return false if amount > total_inventory[item]
+    @vendors.each do |vendor|
+      amount -= vendor.sell(item, amount)
+    end
+    true
   end
 end

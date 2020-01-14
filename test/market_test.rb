@@ -97,4 +97,50 @@ class MarketTest < Minitest::Test
 
     assert_equal false, @market.sell(@item1, 200)
   end
+
+  def test_it_can_return_false_if_the_item_is_not_in_stock_by_vendors
+    @market.add_vendor(@vendor1)
+    @market.add_vendor(@vendor2)
+    @market.add_vendor(@vendor3)
+    @vendor1.stock(@item1, 35)
+    @vendor1.stock(@item2, 7)
+    @vendor2.stock(@item4, 50)
+    @vendor2.stock(@item3, 25)
+    @vendor3.stock(@item1, 65)
+
+    assert_equal false, @market.sell(@item5, 1)
+  end
+
+  def test_sell_works_over_single_vendor
+    @market.add_vendor(@vendor1)
+    @market.add_vendor(@vendor2)
+    @market.add_vendor(@vendor3)
+    @vendor1.stock(@item1, 35)
+    @vendor1.stock(@item2, 7)
+    @vendor2.stock(@item4, 50)
+    @vendor2.stock(@item3, 25)
+    @vendor3.stock(@item1, 65)
+    @market.sell(@item4, 5)
+
+    assert_equal 45, @vendor2.check_stock(@item4)
+  end
+
+  def test_sell_works_over_multiple_vendors
+    @market.add_vendor(@vendor1)
+    @market.add_vendor(@vendor2)
+    @market.add_vendor(@vendor3)
+    @vendor1.stock(@item1, 35)
+    @vendor1.stock(@item2, 7)
+    @vendor2.stock(@item4, 50)
+    @vendor2.stock(@item3, 25)
+    @vendor3.stock(@item1, 65)
+    require "pry"; binding.pry
+    @market.sell(@item4, 5)
+    @market.sell(@item1, 40)
+    require "pry"; binding.pry
+    assert_equal 0, @vendor1.check_stock(@item1)
+    assert_equal 60, @vendor3.check_stock(@item1)
+  end
+
+
 end
