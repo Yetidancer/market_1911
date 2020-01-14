@@ -1,12 +1,15 @@
-require './vendor'
+require './lib/vendor'
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'mocha/minitest'
 
 class VendorTest < Minitest::Test
 
   def setup
-    @item1 = Item.new({name: 'Peach', price: "$0.75"})
-    @item2 = Item.new({name: 'Tomato', price: '$0.50'})
+    # @item1 = Item.new({name: 'Peach', price: "$0.75"})
+    # @item2 = Item.new({name: 'Tomato', price: '$0.50'})
+    @item1 = mock('Peach')
+    @item2 = mock('Tomato')
     @vendor = Vendor.new("Rocky Mountain Fresh")
   end
 
@@ -15,7 +18,7 @@ class VendorTest < Minitest::Test
   end
 
   def test_it_has_attributes
-    
+
   end
 
 end
