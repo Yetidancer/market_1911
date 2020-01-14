@@ -10,4 +10,12 @@ class Vendor
     return @inventory[item] if @inventory[item]
     0
   end
+
+  def stock(item, amount)
+    if @inventory[item]
+      @inventory[item] += amount
+    else
+      @inventory[item] = amount
+    end 
+  end
 end

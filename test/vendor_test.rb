@@ -28,5 +28,24 @@ class VendorTest < Minitest::Test
   def test_vendor_can_check_stock
     assert_equal 0, @vendor.check_stock(@item1)
   end
-  
+
+  def test_vendor_can_stock_inventory
+    @vendor.stock(@item1, 30)
+
+    assert_equal ({@item1 => 30}), @vendor.inventory
+
+    assert_equal 30, @vendor.check_stock(@item1)
+
+    @vendor.stock(@item1, 25)
+
+    assert_equal 55, @vendor.check_stock(@item1)
+  end
+
+  def test_vendor_can_stock_inventory_more_than_once
+    @vendor.stock(@item1, 30)
+    @vendor.stock(@item1, 25)
+    @vendor.stock(@item2, 12)
+
+    assert_equal ({@item1 => 55, @item2 => 12}), @vendor.inventory
+  end
 end
